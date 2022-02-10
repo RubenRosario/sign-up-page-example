@@ -9,13 +9,14 @@ export const InputContainer = styled.div`
 `;
 
 export const Label = styled.label`
-	color: #fff;
+	color: ${({ notValid }) => (!notValid ? '#fff' : `var(--danger)`)};
 	padding-left: 10px;
 `;
 
 export const InputElement = styled.input`
 	width: 100%;
 	height: 2.5rem;
+	background-color: ${({ notValid }) => (!notValid ? '#fff' : `var(--pink)`)};
 	border: 2px solid var(--main-grey);
 	border-radius: 10px;
 	outline: none;
@@ -26,4 +27,10 @@ export const InputElement = styled.input`
 	&:focus {
 		border: 3px solid var(--main-blue);
 	}
+`;
+export const ErrMessage = styled.p`
+	visibility: ${({ show }) => (show ? 'visible' : 'hidden')};
+	color: var(--danger);
+	padding: 5px;
+	font-size: x-small;
 `;
