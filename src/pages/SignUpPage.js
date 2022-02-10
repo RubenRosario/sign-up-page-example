@@ -12,6 +12,12 @@ import {
 } from './SignUpElements';
 import Input from '../components/UIElements/input/InputComponent';
 import Button from '../components/UIElements/button/ButtonComponent';
+import {
+	VALIDATOR_REQUIRE,
+	VALIDATOR_EMAIL,
+	VALIDATOR_MINLENGTH,
+	VALIDATOR_ALPHA,
+} from '../utils/validators';
 import logo_1 from '../assets/images/logo_1.jpg';
 import logo_2 from '../assets/images/logo_2_nb.png';
 
@@ -50,6 +56,8 @@ const SignUpPage = () => {
 				key={'form1_email'}
 				placeholder='Type in your email'
 				label='Email'
+				err='Please, insert a valid email.'
+				validators={[VALIDATOR_REQUIRE(), VALIDATOR_EMAIL()]}
 				inputHandler={updateInputData}
 			/>
 			<Input
@@ -58,6 +66,8 @@ const SignUpPage = () => {
 				key={'form1_password'}
 				placeholder='Set a password'
 				label='Password'
+				err='Password must have at least 8 character.'
+				validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(8)]}
 				inputHandler={updateInputData}
 			/>
 		</Form>
@@ -70,6 +80,8 @@ const SignUpPage = () => {
 				type='text'
 				placeholder='What is your first name'
 				label='First Name'
+				err='Please insert a valid first name (no spaces).'
+				validators={[VALIDATOR_REQUIRE(), VALIDATOR_ALPHA()]}
 				inputHandler={updateInputData}
 			/>
 			<Input
@@ -78,6 +90,8 @@ const SignUpPage = () => {
 				type='text'
 				placeholder='... and your last name'
 				label='Last Name'
+				err='Please insert a valid last name (no spaces).'
+				validators={[VALIDATOR_REQUIRE(), VALIDATOR_ALPHA()]}
 				inputHandler={updateInputData}
 			/>
 			<Input
@@ -86,6 +100,8 @@ const SignUpPage = () => {
 				type='text'
 				placeholder='Choose a username'
 				label='Username'
+				err='this field is required.'
+				validators={[VALIDATOR_REQUIRE()]}
 				inputHandler={updateInputData}
 			/>
 		</Form>
@@ -99,6 +115,8 @@ const SignUpPage = () => {
 				type='text'
 				placeholder='What is your address'
 				label='Address'
+				err='this field is required.'
+				validators={[VALIDATOR_REQUIRE()]}
 				inputHandler={updateInputData}
 			/>
 			<Input
@@ -108,6 +126,8 @@ const SignUpPage = () => {
 				placeholder='City'
 				halfWidth
 				label='City'
+				err='Please insert a valid city name.'
+				validators={[VALIDATOR_REQUIRE(), VALIDATOR_ALPHA()]}
 				inputHandler={updateInputData}
 			/>
 			<Input
@@ -117,6 +137,8 @@ const SignUpPage = () => {
 				placeholder='State'
 				halfWidth
 				label='State'
+				err='Please insert a valid state name.'
+				validators={[VALIDATOR_REQUIRE(), VALIDATOR_ALPHA()]}
 				inputHandler={updateInputData}
 			/>
 			<Input
@@ -125,6 +147,8 @@ const SignUpPage = () => {
 				type='text'
 				placeholder='County'
 				label='Country'
+				err='Please insert a valid country name.'
+				validators={[VALIDATOR_REQUIRE(), VALIDATOR_ALPHA()]}
 				inputHandler={updateInputData}
 			/>
 			<Input
