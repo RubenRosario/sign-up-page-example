@@ -56,8 +56,8 @@ const Input = ({
 	};
 
 	useEffect(() => {
-		inputHandler(id, inputState.value);
-	}, [id, inputState.value, inputHandler]);
+		inputHandler(id, inputState.value, inputState.isValid);
+	}, [id, inputState.value, inputState.isValid, inputHandler]);
 
 	return (
 		<InputContainer halfWidth={halfWidth}>

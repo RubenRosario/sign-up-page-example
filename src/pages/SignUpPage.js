@@ -24,41 +24,90 @@ import logo_2 from '../assets/images/logo_2_nb.png';
 const SignUpPage = () => {
 	// which form should be visible? the default is form #1
 	const [whichForm, setWhichForm] = useState(1);
-	const [showForm, setShowForm] = useState(true);
 	const navigate = useNavigate();
 	const [inputData, setInputData] = useState({
-		email: '',
-		password: '',
-		firstName: '',
-		lastName: '',
-		username: '',
-		address: '',
-		city: '',
-		state: '',
-		country: '',
-		phone: '',
+		email: { value: '', isValid: false },
+		password: { value: '', isValid: false },
+		firstName: { value: '', isValid: false },
+		lastName: { value: '', isValid: false },
+		username: { value: '', isValid: false },
+		address: { value: '', isValid: false },
+		city: { value: '', isValid: false },
+		state: { value: '', isValid: false },
+		country: { value: '', isValid: false },
+		phone: { value: '', isValid: false },
 	});
 
-	const updateInputData = (id, value) => {
-		inputData[id] = value;
+	const updateInputHandler = (id, value, isValid) => {
+		inputData[id].value = value;
+		inputData[id].isValid = isValid;
+
 		setInputData(inputData);
 	};
 
+	const isFormValid = () => {
+		switch (whichForm) {
+			case 1:
+				const { email, password } = inputData;
+				return (
+					email.value !== '' &&
+					email.isValid === true &&
+					password.value !== '' &&
+					password.isValid === true
+				);
+			case 2:
+				const { firstName, lastName, username } = inputData;
+				return (
+					firstName.value !== '' &&
+					firstName.isValid === true &&
+					lastName.value !== '' &&
+					lastName.isValid === true &&
+					username.value !== '' &&
+					username.isValid === true
+				);
+			case 3:
+				const { address, city, state, country, phone } = inputData;
+				return (
+					address.value !== '' &&
+					address.isValid === true &&
+					city.value !== '' &&
+					city.isValid === true &&
+					state.value !== '' &&
+					state.isValid === true &&
+					country.value !== '' &&
+					country.isValid === true &&
+					phone.value !== '' &&
+					phone.isValid === true
+				);
+			default:
+				return false;
+		}
+	};
+
+	const continueHandler = () => {
+		if (isFormValid()) {
+			setWhichForm(whichForm + 1);
+		}
+	};
+
 	const navigateToPage = () => {
-		navigate('/new-account', { state: inputData });
+		console.log(isFormValid());
+		if (isFormValid()) {
+			navigate('/new-account', { state: inputData });
+		}
 	};
 
 	const formEmailPassword = (
-		<Form visible={whichForm === 1} id='1'>
+		<>
 			<Input
 				type='email'
 				id='email'
 				key={'form1_email'}
 				placeholder='Type in your email'
 				label='Email'
-				err='Please, insert a valid email.'
+				err='Insert a valid email.'
 				validators={[VALIDATOR_REQUIRE(), VALIDATOR_EMAIL()]}
-				inputHandler={updateInputData}
+				inputHandler={updateInputHandler}
 			/>
 			<Input
 				id='password'
@@ -68,21 +117,21 @@ const SignUpPage = () => {
 				label='Password'
 				err='Password must have at least 8 character.'
 				validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(8)]}
-				inputHandler={updateInputData}
+				inputHandler={updateInputHandler}
 			/>
-		</Form>
+		</>
 	);
 	const formNameUserName = (
-		<Form visible={whichForm === 2} id='2'>
+		<>
 			<Input
 				key={'form2_firsName'}
-				id='firsName'
+				id='firstName'
 				type='text'
 				placeholder='What is your first name'
 				label='First Name'
-				err='Please insert a valid first name (no spaces).'
+				err='Insert a valid first name (no spaces).'
 				validators={[VALIDATOR_REQUIRE(), VALIDATOR_ALPHA()]}
-				inputHandler={updateInputData}
+				inputHandler={updateInputHandler}
 			/>
 			<Input
 				id='lastName'
@@ -90,9 +139,9 @@ const SignUpPage = () => {
 				type='text'
 				placeholder='... and your last name'
 				label='Last Name'
-				err='Please insert a valid last name (no spaces).'
+				err='Insert a valid last name (no spaces).'
 				validators={[VALIDATOR_REQUIRE(), VALIDATOR_ALPHA()]}
-				inputHandler={updateInputData}
+				inputHandler={updateInputHandler}
 			/>
 			<Input
 				id='username'
@@ -102,13 +151,13 @@ const SignUpPage = () => {
 				label='Username'
 				err='this field is required.'
 				validators={[VALIDATOR_REQUIRE()]}
-				inputHandler={updateInputData}
+				inputHandler={updateInputHandler}
 			/>
-		</Form>
+		</>
 	);
 
 	const formAddressPhone = (
-		<Form visible={whichForm === 3} id='3'>
+		<>
 			<Input
 				id='address'
 				key={'form3_address'}
@@ -117,7 +166,7 @@ const SignUpPage = () => {
 				label='Address'
 				err='this field is required.'
 				validators={[VALIDATOR_REQUIRE()]}
-				inputHandler={updateInputData}
+				inputHandler={updateInputHandler}
 			/>
 			<Input
 				id='city'
@@ -126,9 +175,9 @@ const SignUpPage = () => {
 				placeholder='City'
 				halfWidth
 				label='City'
-				err='Please insert a valid city name.'
+				err='Insert a valid city name.'
 				validators={[VALIDATOR_REQUIRE(), VALIDATOR_ALPHA()]}
-				inputHandler={updateInputData}
+				inputHandler={updateInputHandler}
 			/>
 			<Input
 				id='state'
@@ -137,9 +186,9 @@ const SignUpPage = () => {
 				placeholder='State'
 				halfWidth
 				label='State'
-				err='Please insert a valid state name.'
+				err='Insert a valid state name.'
 				validators={[VALIDATOR_REQUIRE(), VALIDATOR_ALPHA()]}
-				inputHandler={updateInputData}
+				inputHandler={updateInputHandler}
 			/>
 			<Input
 				id='country'
@@ -147,9 +196,9 @@ const SignUpPage = () => {
 				type='text'
 				placeholder='County'
 				label='Country'
-				err='Please insert a valid country name.'
+				err='Insert a valid country name.'
 				validators={[VALIDATOR_REQUIRE(), VALIDATOR_ALPHA()]}
-				inputHandler={updateInputData}
+				inputHandler={updateInputHandler}
 			/>
 			<Input
 				id='phone'
@@ -157,9 +206,10 @@ const SignUpPage = () => {
 				type='phone'
 				placeholder='What is your phone number'
 				label='Phone'
-				inputHandler={updateInputData}
+				validators={[]}
+				inputHandler={updateInputHandler}
 			/>
-		</Form>
+		</>
 	);
 
 	const emailPasswordInfo = (
@@ -189,20 +239,19 @@ const SignUpPage = () => {
 			</p>
 		</Section>
 	);
-	const continueHandler = () => {
-		setWhichForm(whichForm + 1);
-		setShowForm(!showForm);
-	};
+
 	return (
 		<PageWrapper>
 			<FormsContainer name='form-container'>
 				<FormWrapper name='form-wrapper'>
 					<h1>Sign Up</h1>
-					{whichForm === 1
-						? formEmailPassword
-						: whichForm === 2
-						? formNameUserName
-						: formAddressPhone}
+					<Form>
+						{whichForm === 1
+							? formEmailPassword
+							: whichForm === 2
+							? formNameUserName
+							: formAddressPhone}
+					</Form>
 					{whichForm !== 3 ? (
 						<Button onClick={continueHandler}>{'Continue'}</Button>
 					) : (
