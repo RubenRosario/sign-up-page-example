@@ -8,7 +8,7 @@ export const Container = styled.div`
 	justify-content: center;
 `;
 
-export const ElementsWrapper = styled.div`
+export const ElementsWrapper = styled.form`
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;

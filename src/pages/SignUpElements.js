@@ -27,7 +27,7 @@ export const FormsContainer = styled.div`
 
 export const FormWrapper = styled.div`
 	width: 60%;
-	height: 80%;
+	/* height: 80%; */
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: flex-start;
